@@ -1,21 +1,37 @@
 package com.nicolasmarcosti.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nicolasmarcosti.cursomc.domain.Categoria;
+import com.nicolasmarcosti.cursomc.services.CategoriaService;
 
+//Começa a declaração da classe que será o controlador REST que se comunicará com o serviço
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public List<Categoria> listar() {
+	//Instancia-se a classe do serviço com o @Autowired
+	@Autowired
+	private CategoriaService service;
+	
+	//Faço um RequestMapping, similar a action do struts que receberá em seu get um ID
+	//e retornará este ID
+	//O ResponseEntity<?> é um tipo mais genérico, entendendo que a resposta pode ser mais complexa 
+	//Com coisas do HTTP
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
+		Categoria obj = service.find(id);
+		
+		//Sendo ok, retorna o objeto correspondente ao ID procurado
+		return ResponseEntity.ok().body(obj);
+		
+		/*
 		Categoria cat1 = new Categoria(1,"Informática");
 		Categoria cat2 = new Categoria(2,"Escritório");
 		
@@ -23,7 +39,7 @@ public class CategoriaResource {
 		lista.add(cat1);
 		lista.add(cat2);
 		
-		return lista;
+		return lista;*/
 		
 	}
 	
