@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nicolasmarcosti.cursomc.domain.Categoria;
 import com.nicolasmarcosti.cursomc.services.CategoriaService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 //Começa a declaração da classe que será o controlador REST que se comunicará com o serviço
 @RestController
 @RequestMapping(value="/categorias")
@@ -24,12 +26,14 @@ public class CategoriaResource {
 	//O ResponseEntity<?> é um tipo mais genérico, entendendo que a resposta pode ser mais complexa 
 	//Com coisas do HTTP
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		
 		Categoria obj = service.find(id);
 		
 		//Sendo ok, retorna o objeto correspondente ao ID procurado
 		return ResponseEntity.ok().body(obj);
+		
+		//O controlador rest deve ser pequeno e não devem haver tratativas de exceções nele
 		
 		/*
 		

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Categoria implements Serializable{
 	
@@ -24,6 +26,7 @@ public class Categoria implements Serializable{
 	//A associação será um list e para a coleção de produtos preciso usar uma classe que implementa a lista. No caso, ArrayList<>()
 	
 	//Como o mapeamento nxn já foi feito no produto, aqui coloco apenas que já foi mapeado
+	@JsonManagedReference
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	

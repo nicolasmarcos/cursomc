@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 //Ao realizar o import da anotação, é sempre da javax.Persistence 
 @Entity
 public class Produto implements Serializable{
@@ -25,6 +27,7 @@ public class Produto implements Serializable{
 	private Double preco;
 	
 	//Um produto pode ter várias categorias. Logo, implementarei com uma lista de categorias
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(	name = "PRODUTO_CATEGORIA",
 				joinColumns = @JoinColumn(name = "produto_id"),
